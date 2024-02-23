@@ -1,6 +1,7 @@
 package com.ryan.ryanshoppingmall.service;
 
 
+import com.ryan.ryanshoppingmall.constant.ProductCategory;
 import com.ryan.ryanshoppingmall.dao.ProductDao;
 import com.ryan.ryanshoppingmall.dto.ProductRequest;
 import com.ryan.ryanshoppingmall.model.Product;
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category, String search) {
+        return productDao.getProducts(category, search);
     }
 }

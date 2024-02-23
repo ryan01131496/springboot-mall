@@ -4,5 +4,6 @@ public enum ProductCategory {
     FOOD,
     BOOK,
     VEHICLE,
-    DRINK
+    DRINK,
+    CAR
 }

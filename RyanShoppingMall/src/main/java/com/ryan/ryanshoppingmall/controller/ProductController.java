@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall.controller;
 
+import com.ryan.ryanshoppingmall.constant.ProductCategory;
 import com.ryan.ryanshoppingmall.dto.ProductRequest;
 import com.ryan.ryanshoppingmall.model.Product;
 import com.ryan.ryanshoppingmall.service.ProductService;
@@ -69,8 +70,9 @@ public class ProductController {
 
     // Search the whole products
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> productList = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(@RequestParam (required = false) ProductCategory category,
+                                                     @RequestParam (required = false) String search) {
+        List<Product> productList = productService.getProducts(category, search);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall.dao;
 
+import com.ryan.ryanshoppingmall.constant.ProductCategory;
 import com.ryan.ryanshoppingmall.dto.ProductRequest;
 import com.ryan.ryanshoppingmall.model.Product;
 
@@ -12,5 +13,5 @@ public interface ProductDao {
 
     public void deleteProduct(Integer productId);
 
-    public List<Product> getProducts();
+    public List<Product> getProducts(ProductCategory category, String search);
 }
