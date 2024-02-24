@@ -121,6 +121,13 @@ public class ProductDaoImpl implements ProductDao {
 
         // Sorting here
         sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+        map.put("orderBy", productQueryParams.getOrderBy());
+        map.put("sort", productQueryParams.getSort());
+
+        // Page
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", productQueryParams.getLimit());
+        map.put("offset", productQueryParams.getOffset());
 
         ProductRowMapper productRowMapper = new ProductRowMapper();
 
