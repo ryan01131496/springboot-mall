@@ -1,6 +1,7 @@
 package com.ryan.ryanshoppingmall.controller;
 
 import com.ryan.ryanshoppingmall.constant.ProductCategory;
+import com.ryan.ryanshoppingmall.dto.ProductQueryParams;
 import com.ryan.ryanshoppingmall.dto.ProductRequest;
 import com.ryan.ryanshoppingmall.model.Product;
 import com.ryan.ryanshoppingmall.service.ProductService;
@@ -72,7 +73,14 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(@RequestParam (required = false) ProductCategory category,
                                                      @RequestParam (required = false) String search) {
-        List<Product> productList = productService.getProducts(category, search);
+
+
+
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
