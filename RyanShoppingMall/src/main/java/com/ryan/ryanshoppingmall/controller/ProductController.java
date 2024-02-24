@@ -5,6 +5,7 @@ import com.ryan.ryanshoppingmall.dto.ProductQueryParams;
 import com.ryan.ryanshoppingmall.dto.ProductRequest;
 import com.ryan.ryanshoppingmall.model.Product;
 import com.ryan.ryanshoppingmall.service.ProductService;
+import com.ryan.ryanshoppingmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -75,7 +76,7 @@ public class ProductController {
 
     // Search the whole products
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             // Filtering
             @RequestParam (required = false) ProductCategory category,
             @RequestParam (required = false) String search,
@@ -97,8 +98,19 @@ public class ProductController {
         productQueryParams.setLimit(limit);
         productQueryParams.setOffset(offset);
 
+        // get product list
         List<Product> productList = productService.getProducts(productQueryParams);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+        // get the total number of products
+        Integer total = productService.countProducts(productQueryParams);
+
+        // page
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResults(productList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 }
