@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class RyanShoppingMallApplicationTests {
 
     @Test
-    public void test() {
-
+    void contextLoads() {
     }
+
 }
