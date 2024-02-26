@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall.controller;
 
+import com.ryan.ryanshoppingmall.dto.UserLoginRequest;
 import com.ryan.ryanshoppingmall.dto.UserRegisterRequest;
 import com.ryan.ryanshoppingmall.model.User;
 import com.ryan.ryanshoppingmall.service.UserService;
@@ -24,5 +25,12 @@ public class UserController {
         User user = userService.getById(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
