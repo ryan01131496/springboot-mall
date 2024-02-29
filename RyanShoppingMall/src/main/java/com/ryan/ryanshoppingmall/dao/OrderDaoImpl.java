@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall.dao;
 
+import com.ryan.ryanshoppingmall.dto.OrderQueryParams;
 import com.ryan.ryanshoppingmall.model.Order;
 import com.ryan.ryanshoppingmall.model.OrderItem;
 import com.ryan.ryanshoppingmall.rowmapper.OrderItemRowMapper;
@@ -96,5 +97,53 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, orderItemRowMapper);
 
         return orderItemList;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id, user_id, total_amount, created_date, last_modified_date\n" +
+                "FROM `order`\n" +
+                "WHERE 1=1";
+        Map<String, Object> map = new HashMap<>();
+        OrderRowMapper orderRowMapper = new OrderRowMapper();
+
+        // Searching condition
+        sql = addFilteringSql(sql, map, orderQueryParams);
+
+        // Sorting
+        sql = sql + " ORDER BY created_date DESC";
+
+        // Page
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit", orderQueryParams.getLimit());
+        map.put("offset", orderQueryParams.getOffset());
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql, map, orderRowMapper);
+
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT count(*)\n" +
+                "FROM `order`\n" +
+                "WHERE 1=1";
+        Map<String, Object> map = new HashMap<>();
+
+        // Searching condition
+        sql = addFilteringSql(sql, map, orderQueryParams);
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+        return total;
+    }
+
+    private String addFilteringSql(String sql, Map<String, Object> map, OrderQueryParams orderQueryParams) {
+        if (orderQueryParams.getUserId() != null) {
+            sql = sql + " AND user_id = :userId";
+            map.put("userId", orderQueryParams.getUserId());
+        }
+
+        return sql;
     }
 }

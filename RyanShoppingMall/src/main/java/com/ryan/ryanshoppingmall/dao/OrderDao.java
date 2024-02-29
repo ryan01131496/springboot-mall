@@ -1,5 +1,6 @@
 package com.ryan.ryanshoppingmall.dao;
 
+import com.ryan.ryanshoppingmall.dto.OrderQueryParams;
 import com.ryan.ryanshoppingmall.model.Order;
 import com.ryan.ryanshoppingmall.model.OrderItem;
 
@@ -13,4 +14,8 @@ public interface OrderDao {
     public Order getOrderById(Integer orderId);
 
     public List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
 }
