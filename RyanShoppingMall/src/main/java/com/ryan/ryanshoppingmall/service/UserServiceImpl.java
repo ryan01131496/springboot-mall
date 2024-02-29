@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
         // Check the user if it exists
         if (user == null) {
-            log.warn("This email does not exist", userLoginRequest.getEmail());
+            log.warn("This email {} does not exist", userLoginRequest.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword().equals(hashedPassword)) {
             return user;
         } else {
-            log.warn("This password is incorrect", userLoginRequest.getPassword());
+            log.warn("This password {} is incorrect", userLoginRequest.getPassword());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
